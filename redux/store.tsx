@@ -4,6 +4,7 @@ import commentReducer from './commentSlice';
 import rootSaga from './rootSaga';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer } from 'redux-persist';
+import persistStore from 'redux-persist/es/persistStore';
 const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
@@ -22,5 +23,5 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
 });
 export type RootState = ReturnType<typeof store.getState>;
-
+export const persistor = persistStore(store);
 sagaMiddleware.run(rootSaga);

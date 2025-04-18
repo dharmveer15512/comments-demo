@@ -1,14 +1,16 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { ActivityIndicator, SafeAreaView, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
 import CommentsList from './components/CommentsList';
-
+import { PersistGate } from 'redux-persist/integration/react';
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <CommentsList />
-      </SafeAreaView>
+      <PersistGate loading={<ActivityIndicator size={20} />} persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <CommentsList />
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 }
